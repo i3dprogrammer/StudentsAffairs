@@ -18,6 +18,11 @@ namespace StudentsAffairs
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Students", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name:"Students",
+                url: "{controller}/{action}/{sortOrder}"
+                );
         }
     }
 }

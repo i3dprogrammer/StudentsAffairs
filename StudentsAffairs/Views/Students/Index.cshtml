@@ -1,6 +1,4 @@
-﻿@model PagedList.IPagedList<StudentsAffairs.Models.Student>
-
-@using PagedList.Mvc;
+﻿@model IEnumerable<StudentsAffairs.Models.Student>
 @{
     ViewBag.Title = "قائمة الطلاب";
 }
@@ -10,10 +8,11 @@
 <p>
     @Html.ActionLink("إضافة طالب جديد", "Create")
 </p>
+
 <table class="table table-hover">
     <tr style="font-weight: bold; font-size: larger">
         <td>
-            @Html.DisplayNameFor(model => model.First().Name)
+            @Html.ActionLink("اسـم الطــالــب","Index", new { sortOrder = ViewBag.NameSortParm })
         </td>
         <td>
             @Html.DisplayNameFor(model => model.First().Sex)
@@ -59,7 +58,3 @@
 </table>
 
 <br />
-الصفحة @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) من @Model.PageCount
-
-@Html.PagedListPager(Model, page => Url.Action("Index",
-    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
