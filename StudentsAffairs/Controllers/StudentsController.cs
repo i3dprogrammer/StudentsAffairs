@@ -74,14 +74,28 @@ namespace StudentsAffairs.Controllers
         }
 
         // GET: Students
-        public ActionResult Index(int? page)
+        public ActionResult Index(string sortOrder)
         {
-            var students = db.Students.OrderBy(s => s.ID);
+            // Search by name.
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            // Search by department.{TODO}
 
-            int pageSize = 20;
-            int pageNumber = (page ?? 1);
-            return View(students.ToPagedList(pageNumber, pageSize));
+            var students = from s in db.Students select s;
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    students = students.OrderBy(s => s.Name);
+                    break;
+                // case of department.
+                default:
+                    students = students.OrderBy(s => s.ID);
+                    break;
+            }
+
+            return View(students.ToList());
+           
         }
+
 
         // GET: Students/Details/5
         public ActionResult Details(int? id)
