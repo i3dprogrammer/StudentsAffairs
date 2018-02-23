@@ -1,0 +1,16 @@
+﻿@model StudentsAffairs.Models.Student
+
+@{
+    ViewBag.Title = "تفاصيل الطالب";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div>
+    <hr />
+    @Html.Partial("_PartialStudentDetails")
+</div>
+<p>
+    @Html.ActionLink("تعديل", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("الرجوع الي القائمة", "Index")
+</p>

@@ -49,16 +49,16 @@ namespace StudentsAffairs.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
+        [Display(Name = "البريد الالكتروني")]
         [EmailAddress]
         public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "كلمة السر")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "تذكرني؟")]
         public bool RememberMe { get; set; }
     }
 
@@ -66,18 +66,18 @@ namespace StudentsAffairs.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "البريد الالكتروني")]
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "{0} يجب ان تكون {2} حرف علي الأقل.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "كلمة السر")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "تأكيد كلمة السر")]
+        [Compare("Password", ErrorMessage = "كلمة السر لا تطابق تأكيد كلمة السر.")]
         public string ConfirmPassword { get; set; }
     }
 

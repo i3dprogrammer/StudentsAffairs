@@ -1,0 +1,22 @@
+﻿@model StudentsAffairs.Models.Student
+
+@{
+    ViewBag.Title = "حذف الطالب";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<h3>هل أنت متأكد انك تريد حذف الطالب؟</h3>
+<div>
+    <hr />
+    @Html.Partial("_PartialStudentDetails")
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="حذف" class="btn btn-default" /> |
+            @Html.ActionLink("الرجوع الي القائمة", "Index")
+        </div>
+    }
+</div>

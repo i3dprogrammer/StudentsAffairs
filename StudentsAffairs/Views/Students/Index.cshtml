@@ -1,0 +1,65 @@
+﻿@model PagedList.IPagedList<StudentsAffairs.Models.Student>
+
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "قائمة الطلاب";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    @Html.ActionLink("إضافة طالب جديد", "Create")
+</p>
+<table class="table table-hover">
+    <tr style="font-weight: bold; font-size: larger">
+        <td>
+            @Html.DisplayNameFor(model => model.First().Name)
+        </td>
+        <td>
+            @Html.DisplayNameFor(model => model.First().Sex)
+        </td>
+        <td>
+            @Html.DisplayNameFor(model => model.First().PersonalCardId)
+        </td>
+        <td>
+            @Html.DisplayNameFor(model => model.First().StatusOfConstraint)
+        </td>
+        <td>
+            @Html.DisplayNameFor(model => model.First().ContantMethod)
+        </td>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <a href="@Url.Action("Details", new { id = item.ID })">@Html.DisplayFor(modelItem => item.Name)</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sex)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PersonalCardId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StatusOfConstraint)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContantMethod)
+            </td>
+            <td>
+                @Html.ActionLink("تعديل", "Edit", new { id = item.ID }) |
+                @*@Html.ActionLink("تفاصيل", "Details", new { id = item.ID }) |*@
+                @Html.ActionLink("حذف", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
+
+</table>
+
+<br />
+الصفحة @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) من @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
