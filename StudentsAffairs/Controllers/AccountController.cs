@@ -15,7 +15,6 @@ namespace StudentsAffairs.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        const int _maximumRegsitrants = 2;
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private ApplicationDbContext UsersContext = new ApplicationDbContext();
@@ -108,7 +107,7 @@ namespace StudentsAffairs.Controllers
         public ActionResult Register()
         {
             var allUsers = UsersContext.Users.ToList();
-            if (allUsers.Count >= _maximumRegsitrants)
+            if (allUsers.Count >= Constants.MaxRegistrants)
                 return RedirectToAction("Login");
 
             return View();
@@ -122,7 +121,7 @@ namespace StudentsAffairs.Controllers
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
             var allUsers = UsersContext.Users.ToList();
-            if (allUsers.Count >= _maximumRegsitrants)
+            if (allUsers.Count >= Constants.MaxRegistrants)
                 return RedirectToAction("Login");
 
             if (ModelState.IsValid)

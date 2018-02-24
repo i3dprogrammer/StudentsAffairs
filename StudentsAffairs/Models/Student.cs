@@ -12,6 +12,7 @@ namespace StudentsAffairs.Models
 
         [Required(ErrorMessage = "يجب إدخال اسم الطالب")]
         [Display(Name = "إسم الطالب")]
+        [StringLength(50, ErrorMessage = "يجب ان يكون هذا الحقل بين 10 و 50 حرف", MinimumLength = 10)]
         public string Name { get; set; }
 
         [Required(ErrorMessage = "يجب اختيار نوع الطالب")]
@@ -30,17 +31,18 @@ namespace StudentsAffairs.Models
         [Display(Name = "تاريخ الميلاد")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
-        public DateTime BirthDate { get; set; }
+        public DateTime? BirthDate { get; set; }
 
-        [Required(ErrorMessage = "يجب ادخال جهة الميلاد")]
+        //[Required(ErrorMessage = "يجب ادخال جهة الميلاد")]
         [Display(Name = "جهه الميلاد")]
         public string BirthPlace { get; set; }
 
-        [Required(ErrorMessage = "يجب ادخال رقم البطاقة الشخصية")]
+        //[Required(ErrorMessage = "يجب ادخال رقم البطاقة الشخصية")]
         [Display(Name = "رقم البطاقه الشخصيه ")]
+        [RegularExpression("[0-9]+", ErrorMessage = "رقم البطاقة يجب ان يحتوي علي ارقام فقط")]
         public string PersonalCardId { get; set; }
 
-        [Required(ErrorMessage = "يجب ادخال السجل المدني")]
+        //[Required(ErrorMessage = "يجب ادخال السجل المدني")]
         [Display(Name = "السجل المدنى")]
         public string CivilRegistry { get; set; }
 
@@ -48,37 +50,38 @@ namespace StudentsAffairs.Models
         [Display(Name = "المؤهل الدراسى وتاريخه")]
         public string AcademicQualificationAndDate { get; set; }
 
-        [Required(ErrorMessage = "يجب ادخال المجموع")]
+        //[Required(ErrorMessage = "يجب ادخال المجموع")]
         [Display(Name = "المجموع")]
-        public double Total { get; set; }
+        [RegularExpression(@"[0-9]+(\.[0-9]*)?", ErrorMessage = "يجب ان يكون المجموع علي هيئة عدد عشري او صحيح")]
+        public double? Total { get; set; }
 
         [Required(ErrorMessage = "يجب ادخال التخصص")]
         [Display(Name = "التخصص")]
         public string Speciality { get; set; }
 
-        [Required(ErrorMessage = "يجب ادخال حاله القيد")]
+        //[Required(ErrorMessage = "يجب ادخال حاله القيد")]
         [Display(Name = "حاله القيد")]
         public string StatusOfConstraint { get; set; }
 
-        [Required(ErrorMessage = "يجب ادخال طريقه الاتصال")]
-        [Display(Name = "طريقه الاتصال")]
+        //[Required(ErrorMessage = "يجب ادخال طريقة الاتصال")]
+        [Display(Name = "طريقة الاتصال")]
         public string ContantMethod { get; set; }
 
-        [Required(ErrorMessage = "يجب ادخال تاريخ الالتحاق")]
+        //[Required(ErrorMessage = "يجب ادخال تاريخ الالتحاق")]
         [Display(Name = "تاريخ الالتحاق")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
-        public DateTime JoinDate { get; set; }
+        public DateTime? JoinDate { get; set; }
 
-        [Required(ErrorMessage = "يجب ادخال محل الاقامه (محافظه)")]
+        //[Required(ErrorMessage = "يجب ادخال محل الاقامه (محافظه)")]
         [Display(Name = "محل الاقامه (محافظه)")]
         public string PlaceOfResidence { get; set; }
 
-        [Required(ErrorMessage = "يجب ادخال رقم المنزل")]
+        //[Required(ErrorMessage = "يجب ادخال رقم المنزل")]
         [Display(Name = "رقم المنزل")]
-        public int HomeNumber { get; set; }
+        public int? HomeNumber { get; set; }
 
-        [Required(ErrorMessage = "يجب ادخال رقم الشارع")]
+        //[Required(ErrorMessage = "يجب ادخال رقم الشارع")]
         [Display(Name = "رقم الشارع")]
         public string StreetNumber { get; set; }
 

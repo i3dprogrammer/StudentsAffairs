@@ -199,6 +199,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\StudentsController.cs" />
     <Compile Include="DAL\StudentsAffairsContext.cs" />
@@ -208,6 +209,30 @@
     <Compile Include="Migrations\201802220800572_InitialCreate.cs" />
     <Compile Include="Migrations\201802220800572_InitialCreate.Designer.cs">
       <DependentUpon>201802220800572_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802231357161_AddStudentLengthConstraints.cs" />
+    <Compile Include="Migrations\201802231357161_AddStudentLengthConstraints.Designer.cs">
+      <DependentUpon>201802231357161_AddStudentLengthConstraints.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802231426470_RemoveRequiredAttribute.cs" />
+    <Compile Include="Migrations\201802231426470_RemoveRequiredAttribute.Designer.cs">
+      <DependentUpon>201802231426470_RemoveRequiredAttribute.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802231501347_RemoveMoreRequiredFields.cs" />
+    <Compile Include="Migrations\201802231501347_RemoveMoreRequiredFields.Designer.cs">
+      <DependentUpon>201802231501347_RemoveMoreRequiredFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802231503138_RemoveMoreRequiredFields1.cs" />
+    <Compile Include="Migrations\201802231503138_RemoveMoreRequiredFields1.Designer.cs">
+      <DependentUpon>201802231503138_RemoveMoreRequiredFields1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802231505498_MoreRequiredFields.cs" />
+    <Compile Include="Migrations\201802231505498_MoreRequiredFields.Designer.cs">
+      <DependentUpon>201802231505498_MoreRequiredFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802231511373_MoreFuckingFields.cs" />
+    <Compile Include="Migrations\201802231511373_MoreFuckingFields.Designer.cs">
+      <DependentUpon>201802231511373_MoreFuckingFields.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -283,6 +308,24 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201802220800572_InitialCreate.resx">
       <DependentUpon>201802220800572_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802231357161_AddStudentLengthConstraints.resx">
+      <DependentUpon>201802231357161_AddStudentLengthConstraints.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802231426470_RemoveRequiredAttribute.resx">
+      <DependentUpon>201802231426470_RemoveRequiredAttribute.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802231501347_RemoveMoreRequiredFields.resx">
+      <DependentUpon>201802231501347_RemoveMoreRequiredFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802231503138_RemoveMoreRequiredFields1.resx">
+      <DependentUpon>201802231503138_RemoveMoreRequiredFields1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802231505498_MoreRequiredFields.resx">
+      <DependentUpon>201802231505498_MoreRequiredFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802231511373_MoreFuckingFields.resx">
+      <DependentUpon>201802231511373_MoreFuckingFields.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
