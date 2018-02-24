@@ -50,7 +50,6 @@
             </td>
             <td>
                 @Html.ActionLink("تعديل", "Edit", new { id = item.ID }) |
-                @*@Html.ActionLink("تفاصيل", "Details", new { id = item.ID }) |*@
                 @Html.ActionLink("حذف", "Delete", new { id = item.ID })
             </td>
         </tr>
@@ -62,4 +61,4 @@
 الصفحة @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) من @Model.PageCount
 
 @Html.PagedListPager(Model, page => Url.Action("Index",
-    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }), new PagedListRenderOptions { LinkToPreviousPageFormat = ">", LinkToNextPageFormat = "<"})

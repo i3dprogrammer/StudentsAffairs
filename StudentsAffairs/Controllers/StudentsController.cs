@@ -12,6 +12,7 @@ using PagedList.Mvc;
 using PagedList;
 using ExcelDataReader;
 using System.Globalization;
+using System.Web.Security;
 
 namespace StudentsAffairs.Controllers
 {
@@ -26,6 +27,7 @@ namespace StudentsAffairs.Controllers
         // the port number.
         public ActionResult FillData()
         {
+            return Content("NO, DATA ALREADY IN THERE :@");
             var evaluator = new DataTable(); // Evaluator for mathematics equations
 
             // Read the xlsx file, make sure the patch actually exists on your system.
@@ -44,31 +46,55 @@ namespace StudentsAffairs.Controllers
                             var student = new Student();
 
                             // TODO: YOU SHOULD FIX THIS.
-                            student.Name = reader.GetString(0);
-                            student.Sex = (StudentSex)Enum.Parse(typeof(StudentSex), reader.GetString(1));
-                            student.Nationality = reader.GetString(2);
-                            student.Religion = (StudentReligion)Enum.Parse(typeof(StudentReligion), reader.GetString(3));
-                            student.BirthDate = reader.GetDateTime(4);
-                            //student.BirthDate = DateTime.Parse(reader.GetString(4));//DateTime.ParseExact(reader.GetString(i++), "d", CultureInfo.InvariantCulture);
-                            student.BirthPlace = reader.GetString(5);
-                            student.PersonalCardId = reader.GetString(6);
-                            student.CivilRegistry = reader.GetString(7);
-                            student.AcademicQualificationAndDate = reader.GetString(8);
-                            student.Total = (double)evaluator.Compute(reader.GetString(9), "");
-                            student.Speciality = reader.GetString(10);
-                            student.StatusOfConstraint = reader.GetString(11);
-                            student.ContantMethod = reader.GetString(12);
-                            //student.JoinDate = DateTime.Parse(reader.GetString(13)); //DateTime.ParseExact(reader.GetString(i++), "d", CultureInfo.InvariantCulture);
-                            student.JoinDate = reader.GetDateTime(13);
-                            student.PlaceOfResidence = reader.GetString(14);
-                            student.HomeNumber = Int32.Parse(reader.GetString(15));
-                            student.StreetNumber = reader.GetString(16);
-
+                            if (!String.IsNullOrEmpty(reader.GetValue(0)?.ToString()))
+                                student.Name = reader.GetString(0);
+                            if (!String.IsNullOrEmpty(reader.GetValue(1)?.ToString()))
+                                student.Sex = (StudentSex)Enum.Parse(typeof(StudentSex), reader.GetString(1));
+                            if (!String.IsNullOrEmpty(reader.GetValue(2)?.ToString()))
+                                student.Nationality = reader.GetString(2);
+                            if (!String.IsNullOrEmpty(reader.GetValue(3)?.ToString()))
+                                student.Religion = (StudentReligion)Enum.Parse(typeof(StudentReligion), reader.GetString(3));
+                            if (!String.IsNullOrEmpty(reader.GetValue(4)?.ToString()))
+                                student.BirthDate = reader.GetDateTime(4);
+                            if (!String.IsNullOrEmpty(reader.GetValue(5)?.ToString()))
+                                student.BirthPlace = reader.GetValue(5).ToString();
+                            if (!String.IsNullOrEmpty(reader.GetValue(6)?.ToString()))
+                                student.PersonalCardId = reader.GetValue(6).ToString();
+                            if (!String.IsNullOrEmpty(reader.GetValue(7)?.ToString()))
+                                student.CivilRegistry = reader.GetValue(7).ToString();
+                            if (!String.IsNullOrEmpty(reader.GetValue(8)?.ToString()))
+                                student.AcademicQualificationAndDate = reader.GetString(8);
+                            if (!String.IsNullOrEmpty(reader.GetValue(9)?.ToString()))
+                            {
+                                try
+                                {
+                                    student.Total = reader.GetDouble(9);
+                                }
+                                catch
+                                {
+                                    student.Total = double.Parse(evaluator.Compute(reader.GetValue(9).ToString(), "").ToString());
+                                }
+                            }
+                            if (!String.IsNullOrEmpty(reader.GetValue(10)?.ToString()))
+                                student.Speciality = reader.GetString(10);
+                            if (!String.IsNullOrEmpty(reader.GetValue(11)?.ToString()))
+                                student.StatusOfConstraint = reader.GetString(11);
+                            if (!String.IsNullOrEmpty(reader.GetValue(12)?.ToString()))
+                                student.ContantMethod = reader.GetString(12);
+                            if (!String.IsNullOrEmpty(reader.GetValue(13)?.ToString()))
+                                student.JoinDate = reader.GetDateTime(13);
+                            if (!String.IsNullOrEmpty(reader.GetValue(14)?.ToString()))
+                                student.PlaceOfResidence = reader.GetValue(14).ToString();
+                            if (!String.IsNullOrEmpty(reader.GetValue(15)?.ToString()))
+                                student.HomeNumber = Int32.Parse(reader.GetValue(15).ToString());
+                            if (!String.IsNullOrEmpty(reader.GetValue(16)?.ToString()))
+                                student.StreetNumber = reader.GetString(16);
                             db.Students.Add(student);
                         }
                     } while (reader.NextResult());
                 }
             }
+
             db.SaveChanges();
             return Content("Added the data succesfully to the database.");
         }
