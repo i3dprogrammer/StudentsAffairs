@@ -10,24 +10,24 @@ namespace StudentsAffairs.Models
     {
         public int ID { get; set; }
 
-        [Required(ErrorMessage = "يجب إدخال اسم الطالب")]
+        //[Required(ErrorMessage = "يجب إدخال اسم الطالب")]
         [Display(Name = "إسم الطالب")]
         [StringLength(50, ErrorMessage = "يجب ان يكون هذا الحقل بين 10 و 50 حرف", MinimumLength = 10)]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "يجب اختيار نوع الطالب")]
+        //[Required(ErrorMessage = "يجب اختيار نوع الطالب")]
         [Display(Name = "النوع")]
         public StudentSex Sex { get; set; }
 
-        [Required(ErrorMessage = "يجب إدخال جنسية الطالب")]
+        //[Required(ErrorMessage = "يجب إدخال جنسية الطالب")]
         [Display(Name = "الجنسيه")]
         public string Nationality { get; set; }
 
-        [Required(ErrorMessage = "يجب اختيار الديانة")]
+        //[Required(ErrorMessage = "يجب اختيار الديانة")]
         [Display(Name = "الديانه")]
         public StudentReligion Religion { get; set; }
 
-        [Required(ErrorMessage = "يجب ادخال تاريخ الميلاد")]
+        //[Required(ErrorMessage = "يجب ادخال تاريخ الميلاد")]
         [Display(Name = "تاريخ الميلاد")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
@@ -46,7 +46,7 @@ namespace StudentsAffairs.Models
         [Display(Name = "السجل المدنى")]
         public string CivilRegistry { get; set; }
 
-        [Required(ErrorMessage = "يجب ادخال المؤهل الدراسى وتاريخه")]
+        //[Required(ErrorMessage = "يجب ادخال المؤهل الدراسى وتاريخه")]
         [Display(Name = "المؤهل الدراسى وتاريخه")]
         public string AcademicQualificationAndDate { get; set; }
 
@@ -55,7 +55,7 @@ namespace StudentsAffairs.Models
         [RegularExpression(@"[0-9]+(\.[0-9]*)?", ErrorMessage = "يجب ان يكون المجموع علي هيئة عدد عشري او صحيح")]
         public double? Total { get; set; }
 
-        [Required(ErrorMessage = "يجب ادخال التخصص")]
+        //[Required(ErrorMessage = "يجب ادخال التخصص")]
         [Display(Name = "التخصص")]
         public string Speciality { get; set; }
 
@@ -89,11 +89,11 @@ namespace StudentsAffairs.Models
         [Display(Name = "ملاحظات اخرى")]
         public string OtherNotes { get; set; }
 
-        [Required(ErrorMessage = "يجب اختيار القسم")]
+        //[Required(ErrorMessage = "يجب اختيار القسم")]
         [Display(Name="القسم")]
         public Departments Department { get; set; }
         
-        [Required(ErrorMessage = "يجب اختيار الفرقة")]
+        //[Required(ErrorMessage = "يجب اختيار الفرقة")]
         [Display(Name="الفرقة")]
         public Groups Group { get; set; }
     }
@@ -102,6 +102,8 @@ namespace StudentsAffairs.Models
     {
         مسلم,
         مسيحى,
+        مسلمة,
+        مسيحية,
         أخر,
     }
 

@@ -238,6 +238,14 @@
     <Compile Include="Migrations\201802241446353_AddDepartmentAndGroup.Designer.cs">
       <DependentUpon>201802241446353_AddDepartmentAndGroup.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201802241536038_RemoveRequiredFieldsAgainn.cs" />
+    <Compile Include="Migrations\201802241536038_RemoveRequiredFieldsAgainn.Designer.cs">
+      <DependentUpon>201802241536038_RemoveRequiredFieldsAgainn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802241542442_RemoveAllRequiredFields.cs" />
+    <Compile Include="Migrations\201802241542442_RemoveAllRequiredFields.Designer.cs">
+      <DependentUpon>201802241542442_RemoveAllRequiredFields.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Departments.cs" />
@@ -334,6 +342,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201802241446353_AddDepartmentAndGroup.resx">
       <DependentUpon>201802241446353_AddDepartmentAndGroup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802241536038_RemoveRequiredFieldsAgainn.resx">
+      <DependentUpon>201802241536038_RemoveRequiredFieldsAgainn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802241542442_RemoveAllRequiredFields.resx">
+      <DependentUpon>201802241542442_RemoveAllRequiredFields.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

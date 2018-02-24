@@ -7,7 +7,7 @@ namespace StudentsAffairs.Models
 {
     public enum Departments
     {
-
+        None,
     }
 
     public enum Groups
