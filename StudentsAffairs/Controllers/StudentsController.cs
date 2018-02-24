@@ -92,7 +92,7 @@ namespace StudentsAffairs.Controllers
             // Check search process.
             students = SearchFilteration(search, students);
             // Set sorting process
-            var studentsAsList =  SortingBy(sort, students);
+            var studentsAsList =  SortProcess(sort, students, search, page);
             // handle paging.
             var studentsAsPages = handlePaging(studentsAsList, search, sort, page);
 
@@ -103,13 +103,12 @@ namespace StudentsAffairs.Controllers
         [NonAction]
         private IPagedList<Student> handlePaging(List<Student> students, string search, string sortOrder, int? page)
         {
-           
             int pageSize = 2;
             int pageNumber = (page ?? 1);
             //saving data.
-            ViewBag.CurrentSort = sortOrder;
-            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.CurrentFilter = search;
+            ViewBag.PreviousPage = page;
+            ViewBag.PreviousSearch = search;
             return students.ToPagedList(pageNumber, pageSize);
         }
 
@@ -125,20 +124,36 @@ namespace StudentsAffairs.Controllers
         }
 
         [NonAction]
-        private List<Student> SortingBy(string sortOrder, IQueryable<Student> students)
+        private List<Student> SortProcess(string sortOrder, IQueryable<Student> students, string search, int? page)
         {
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    students = students.OrderBy(v => v.Name);
-                    break;
-                // case of department.
-                default:
-                    students = students.OrderBy(v => v.ID);
-                    break;
-            }
-
+            if(!isChanged(search)) 
+                SortSwitcher(sortOrder);
+               
+                switch (sortOrder)
+                {
+                    case "name_desc":
+                        students = students.OrderBy(v => v.Name);
+                        break;
+                    // case of department.
+                    default:
+                        students = students.OrderBy(v => v.ID);
+                        break;
+                }
+           
+            
             return students.ToList();
+        }
+
+        [NonAction]
+        private Boolean isChanged(string search)
+        {
+            return (ViewBag.PreviousSearcn != search);
+        }
+
+        [NonAction]
+        private void SortSwitcher(string sortOrder)
+        {
+            ViewBag.CurrentSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
         }
 
         // GET: Students/Details/5
