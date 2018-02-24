@@ -71,5 +71,4 @@
 
 @Html.PagedListPager(Model, page => Url.Action("Index",
     new { page, sort = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }),
-    new PagedListRenderOptions { LinkToPreviousPageFormat = "&rsaquo;", LinkToNextPageFormat = "&lsaquo;", LinkToFirstPageFormat = "&raquo;", LinkToLastPageFormat = "&laquo;"
-    })
+    new PagedListRenderOptions { LinkToPreviousPageFormat = "&rsaquo;", LinkToNextPageFormat = "&lsaquo;", LinkToFirstPageFormat = "&raquo;", LinkToLastPageFormat = "&laquo;"})
