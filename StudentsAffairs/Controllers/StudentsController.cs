@@ -20,6 +20,7 @@ namespace StudentsAffairs.Controllers
     public class StudentsController : Controller
     {
         private StudentsAffairsContext db = new StudentsAffairsContext();
+        private const int MAX_PAGE_ITEM = 20;
 
         // GET: /Students/FillData
         // Access this function by running the website (Ctrl+F5 or F5) then
@@ -103,13 +104,12 @@ namespace StudentsAffairs.Controllers
         [NonAction]
         private IPagedList<Student> handlePaging(List<Student> students, string search, string sortOrder, int? page)
         {
-            int pageSize = 2;
             int pageNumber = (page ?? 1);
             //saving data.
             ViewBag.CurrentFilter = search;
             ViewBag.PreviousPage = page;
             ViewBag.PreviousSearch = search;
-            return students.ToPagedList(pageNumber, pageSize);
+            return students.ToPagedList(pageNumber, MAX_PAGE_ITEM);
         }
 
         [NonAction]
