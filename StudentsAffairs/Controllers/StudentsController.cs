@@ -12,11 +12,7 @@ using PagedList.Mvc;
 using PagedList;
 using ExcelDataReader;
 using System.Globalization;
-<<<<<<< HEAD
-using System.Web.Security;
-=======
 using System.Threading.Tasks;
->>>>>>> 9f3ad78b200f3313e22bbcaf56ebdf3b80c48721
 
 namespace StudentsAffairs.Controllers
 {
@@ -133,7 +129,7 @@ namespace StudentsAffairs.Controllers
         private IPagedList<Student> handlePaging(List<Student> students, string search, string sortOrder, int? page)
         {
            
-            int pageSize = 2;
+            int pageSize = Constants.StudentsPerPage;
             int pageNumber = (page ?? 1);
             //saving data.
             ViewBag.CurrentSort = sortOrder;
