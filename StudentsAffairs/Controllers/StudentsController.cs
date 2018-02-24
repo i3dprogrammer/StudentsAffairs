@@ -133,7 +133,7 @@ namespace StudentsAffairs.Controllers
             ViewBag.CurrentFilter = search;
             ViewBag.PreviousPage = page;
             ViewBag.PreviousSearch = search;
-            return students.ToPagedList(pageNumber, MAX_PAGE_ITEM);
+            return students.ToPagedList(pageNumber, pageSize);
         }
 
         [NonAction]

@@ -88,6 +88,14 @@ namespace StudentsAffairs.Models
         //[Required(ErrorMessage = "يجب ادخال ملاحظات اخرى")]
         [Display(Name = "ملاحظات اخرى")]
         public string OtherNotes { get; set; }
+
+        [Required(ErrorMessage = "يجب اختيار القسم")]
+        [Display(Name="القسم")]
+        public Departments Department { get; set; }
+        
+        [Required(ErrorMessage = "يجب اختيار الفرقة")]
+        [Display(Name="الفرقة")]
+        public Groups Group { get; set; }
     }
 
     public enum StudentReligion

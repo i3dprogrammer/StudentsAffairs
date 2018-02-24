@@ -234,8 +234,13 @@
     <Compile Include="Migrations\201802231511373_MoreFuckingFields.Designer.cs">
       <DependentUpon>201802231511373_MoreFuckingFields.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201802241446353_AddDepartmentAndGroup.cs" />
+    <Compile Include="Migrations\201802241446353_AddDepartmentAndGroup.Designer.cs">
+      <DependentUpon>201802241446353_AddDepartmentAndGroup.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Departments.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Student.cs" />
@@ -326,6 +331,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201802231511373_MoreFuckingFields.resx">
       <DependentUpon>201802231511373_MoreFuckingFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802241446353_AddDepartmentAndGroup.resx">
+      <DependentUpon>201802241446353_AddDepartmentAndGroup.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
