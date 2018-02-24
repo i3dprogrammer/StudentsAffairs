@@ -12,6 +12,7 @@ using PagedList.Mvc;
 using PagedList;
 using ExcelDataReader;
 using System.Globalization;
+using System.Threading.Tasks;
 
 namespace StudentsAffairs.Controllers
 {
@@ -74,28 +75,48 @@ namespace StudentsAffairs.Controllers
         }
 
         // GET: Students
-        public ActionResult Index(string sortOrder)
+        // async to aviod query request delay leak.
+        public  ActionResult Index(string sort, string search)
         {
-            // Search by name.
-            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            // Search by department.{TODO}
+            var students = from v in db.Students select v;
+            // Check search process.
+            students = SearchFilteration(search, students);
+            // Set sorting process
+            var studentsAsList =  SortingBy(sort, students);
 
-            var students = from s in db.Students select s;
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    students = students.OrderBy(s => s.Name);
-                    break;
-                // case of department.
-                default:
-                    students = students.OrderBy(s => s.ID);
-                    break;
-            }
-
-            return View(students.ToList());
+            return View(studentsAsList);
            
         }
 
+        [NonAction]
+        private IQueryable<Student> SearchFilteration(string searchString, IQueryable<Student> students)
+        {
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                students = students.Where(v => v.Name.Contains(searchString));
+            }
+
+            return students;
+        }
+
+        [NonAction]
+        private List<Student> SortingBy(string sortOrder, IQueryable<Student> students)
+        {
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    students = students.OrderBy(v => v.Name);
+                    break;
+                // case of department.
+                default:
+                    students = students.OrderBy(v => v.ID);
+                    break;
+            }
+
+            return students.ToList();
+        }
 
         // GET: Students/Details/5
         public ActionResult Details(int? id)
