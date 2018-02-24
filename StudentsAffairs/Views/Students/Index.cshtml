@@ -1,5 +1,4 @@
 ﻿@model PagedList.IPagedList<StudentsAffairs.Models.Student>
-
 @using PagedList.Mvc;
 @{
     ViewBag.Title = "قائمة الطلاب";
@@ -10,10 +9,19 @@
 <p>
     @Html.ActionLink("إضافة طالب جديد", "Create")
 </p>
+
+@using (Html.BeginForm("Index", "Students", FormMethod.Get))
+{
+    <p>
+        بحث بحسب الاسم: @Html.TextBox("search", ViewBag.CurrentFilter as string)
+        <input type="submit" value="بحث" />
+    </p>
+}
+
 <table class="table table-hover">
     <tr style="font-weight: bold; font-size: larger">
         <td>
-            @Html.DisplayNameFor(model => model.First().Name)
+            @Html.ActionLink("اسـم الطــالــب","Index", new { sort = ViewBag.CurrentFilter })
         </td>
         <td>
             @Html.DisplayNameFor(model => model.First().Sex)
@@ -58,7 +66,11 @@
 </table>
 
 <br />
-الصفحة @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) من @Model.PageCount
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
 @Html.PagedListPager(Model, page => Url.Action("Index",
+<<<<<<< HEAD
     new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }), new PagedListRenderOptions { LinkToPreviousPageFormat = ">", LinkToNextPageFormat = "<"})
+=======
+    new { page, sort = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+>>>>>>> 9f3ad78b200f3313e22bbcaf56ebdf3b80c48721
