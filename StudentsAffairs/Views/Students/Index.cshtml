@@ -1,4 +1,4 @@
-﻿@model PagedList.IPagedList<StudentsAffairs.Models.Student>
+@model PagedList.IPagedList<StudentsAffairs.Models.Student>
 @using PagedList.Mvc;
 @{
     ViewBag.Title = "قائمة الطلاب";
@@ -22,7 +22,7 @@
 <table class="table table-hover">
     <tr style="font-weight: bold; font-size: larger">
         <td>
-            @Html.ActionLink("اسـم الطــالــب", "Index", new { sort = ViewBag.CurrentFilter })
+            @Html.ActionLink("اسـم الطــالــب","Index", new { sort = ViewBag.CurrentSort })
         </td>
         <td>
             @Html.DisplayNameFor(model => model.First().Sex)
