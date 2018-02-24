@@ -12,6 +12,7 @@ using PagedList.Mvc;
 using PagedList;
 using ExcelDataReader;
 using System.Globalization;
+using System.Threading.Tasks;
 
 namespace StudentsAffairs.Controllers
 {
@@ -74,13 +75,70 @@ namespace StudentsAffairs.Controllers
         }
 
         // GET: Students
-        public ActionResult Index(int? page)
+        // async to aviod query request delay leak.
+        public  ActionResult Index(string sort, string search, int? page, string currentFilter)
         {
-            var students = db.Students.OrderBy(s => s.ID);
+            // Changing during paging
+            if (search != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                search = currentFilter; // set previous search.
+            }
 
-            int pageSize = 20;
+            var students = from v in db.Students select v;
+            // Check search process.
+            students = SearchFilteration(search, students);
+            // Set sorting process
+            var studentsAsList =  SortingBy(sort, students);
+            // handle paging.
+            var studentsAsPages = handlePaging(studentsAsList, search, sort, page);
+
+            return View(studentsAsPages);
+           
+        }
+
+        [NonAction]
+        private IPagedList<Student> handlePaging(List<Student> students, string search, string sortOrder, int? page)
+        {
+           
+            int pageSize = 2;
             int pageNumber = (page ?? 1);
-            return View(students.ToPagedList(pageNumber, pageSize));
+            //saving data.
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.CurrentFilter = search;
+            return students.ToPagedList(pageNumber, pageSize);
+        }
+
+        [NonAction]
+        private IQueryable<Student> SearchFilteration(string searchString, IQueryable<Student> students)
+        {
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                students = students.Where(v => v.Name.Contains(searchString));
+            }
+            
+            return students;
+        }
+
+        [NonAction]
+        private List<Student> SortingBy(string sortOrder, IQueryable<Student> students)
+        {
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    students = students.OrderBy(v => v.Name);
+                    break;
+                // case of department.
+                default:
+                    students = students.OrderBy(v => v.ID);
+                    break;
+            }
+
+            return students.ToList();
         }
 
         // GET: Students/Details/5
