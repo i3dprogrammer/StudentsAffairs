@@ -1,4 +1,5 @@
-﻿@model IEnumerable<StudentsAffairs.Models.Student>
+﻿@model PagedList.IPagedList<StudentsAffairs.Models.Student>
+@using PagedList.Mvc;
 @{
     ViewBag.Title = "قائمة الطلاب";
 }
@@ -9,17 +10,18 @@
     @Html.ActionLink("إضافة طالب جديد", "Create")
 </p>
 
-<form asp-controller="Movies" asp-action="Index">
+@using (Html.BeginForm("Index", "Students", FormMethod.Get))
+{
     <p>
-        بحث باسم الطالب: <input type="text" name="search">
-        <input type="submit" value="بحــث" />
+        بحث بحسب الاسم: @Html.TextBox("search", ViewBag.CurrentFilter as string)
+        <input type="submit" value="بحث" />
     </p>
-</form>
+}
 
 <table class="table table-hover">
     <tr style="font-weight: bold; font-size: larger">
         <td>
-            @Html.ActionLink("اسـم الطــالــب","Index", new { sort = ViewBag.NameSortParm })
+            @Html.ActionLink("اسـم الطــالــب","Index", new { sort = ViewBag.CurrentFilter })
         </td>
         <td>
             @Html.DisplayNameFor(model => model.First().Sex)
@@ -65,3 +67,7 @@
 </table>
 
 <br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sort = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

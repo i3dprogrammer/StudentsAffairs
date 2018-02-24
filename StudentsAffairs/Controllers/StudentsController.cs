@@ -76,16 +76,41 @@ namespace StudentsAffairs.Controllers
 
         // GET: Students
         // async to aviod query request delay leak.
-        public  ActionResult Index(string sort, string search)
+        public  ActionResult Index(string sort, string search, int? page, string currentFilter)
         {
+            // Changing during paging
+            if (search != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                search = currentFilter; // set previous search.
+            }
+
             var students = from v in db.Students select v;
             // Check search process.
             students = SearchFilteration(search, students);
             // Set sorting process
             var studentsAsList =  SortingBy(sort, students);
+            // handle paging.
+            var studentsAsPages = handlePaging(studentsAsList, search, sort, page);
 
-            return View(studentsAsList);
+            return View(studentsAsPages);
            
+        }
+
+        [NonAction]
+        private IPagedList<Student> handlePaging(List<Student> students, string search, string sortOrder, int? page)
+        {
+           
+            int pageSize = 2;
+            int pageNumber = (page ?? 1);
+            //saving data.
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.CurrentFilter = search;
+            return students.ToPagedList(pageNumber, pageSize);
         }
 
         [NonAction]
@@ -95,15 +120,13 @@ namespace StudentsAffairs.Controllers
             {
                 students = students.Where(v => v.Name.Contains(searchString));
             }
-
+            
             return students;
         }
 
         [NonAction]
         private List<Student> SortingBy(string sortOrder, IQueryable<Student> students)
         {
-            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-
             switch (sortOrder)
             {
                 case "name_desc":
