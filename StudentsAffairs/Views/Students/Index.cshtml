@@ -9,10 +9,17 @@
     @Html.ActionLink("إضافة طالب جديد", "Create")
 </p>
 
+<form asp-controller="Movies" asp-action="Index">
+    <p>
+        بحث باسم الطالب: <input type="text" name="search">
+        <input type="submit" value="بحــث" />
+    </p>
+</form>
+
 <table class="table table-hover">
     <tr style="font-weight: bold; font-size: larger">
         <td>
-            @Html.ActionLink("اسـم الطــالــب","Index", new { sortOrder = ViewBag.NameSortParm })
+            @Html.ActionLink("اسـم الطــالــب","Index", new { sort = ViewBag.NameSortParm })
         </td>
         <td>
             @Html.DisplayNameFor(model => model.First().Sex)

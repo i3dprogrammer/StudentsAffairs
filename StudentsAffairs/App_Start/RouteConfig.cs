@@ -13,16 +13,14 @@ namespace StudentsAffairs
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+           
             routes.MapRoute(
                 name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Students", action = "Index", id = UrlParameter.Optional }
+                url: "{controller}/{action}/{sort}/",
+                defaults: new { controller = "Students", action = "Index", sort = UrlParameter.Optional }
             );
-
-            routes.MapRoute(
-                name:"Students",
-                url: "{controller}/{action}/{sortOrder}"
-                );
+            
+            
         }
     }
 }
