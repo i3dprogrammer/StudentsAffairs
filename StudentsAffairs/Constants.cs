@@ -8,6 +8,6 @@ namespace StudentsAffairs
     public class Constants
     {
         public const int MaxRegistrants = 2;
-        public const int StudentsPerPage = 2;
+        public const int StudentsPerPage = 20;
     }
 }
