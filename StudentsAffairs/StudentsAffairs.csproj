@@ -301,6 +301,7 @@
     <Content Include="Views\Students\Index.cshtml" />
     <Content Include="Views\Students\_PartialStudentDetails.cshtml" />
     <Content Include="Views\Students\_PartialStudentCreateEdit.cshtml" />
+    <Content Include="Views\Students\Upload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

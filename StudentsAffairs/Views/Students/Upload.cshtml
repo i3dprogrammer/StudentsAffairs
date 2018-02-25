@@ -1,0 +1,12 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@using (Html.BeginForm("Upload", "Students", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+        <input type="file" name="file" />
+        <input type="submit" value="OK" class="btn btn-default" />
+               
+    @ViewBag.action
+}  
