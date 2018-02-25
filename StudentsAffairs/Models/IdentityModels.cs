@@ -20,10 +20,15 @@ namespace StudentsAffairs.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+        public ApplicationDbContext() : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
+
+        //static ApplicationDbContext()
+        //{
+        //    // Set the database initializer which is run once during application start
+        //    Database.SetInitializer<ApplicationDbContext>(new ApplicationDbInitializer());
+        //}
 
         public static ApplicationDbContext Create()
         {

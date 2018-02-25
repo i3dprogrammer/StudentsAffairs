@@ -10,7 +10,6 @@ namespace StudentsAffairs.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "StudentsAffairs.DAL.StudentsAffairsContext";
         }
 
         protected override void Seed(StudentsAffairs.DAL.StudentsAffairsContext context)

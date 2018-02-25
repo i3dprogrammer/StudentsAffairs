@@ -7,13 +7,13 @@ namespace StudentsAffairs.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class RemoveRequiredFieldsAgainn : IMigrationMetadata
+    public sealed partial class Initial : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(RemoveRequiredFieldsAgainn));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Initial));
         
         string IMigrationMetadata.Id
         {
-            get { return "201802241536038_RemoveRequiredFieldsAgainn"; }
+            get { return "201802251722568_Initial"; }
         }
         
         string IMigrationMetadata.Source
