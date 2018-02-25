@@ -24,85 +24,202 @@ namespace StudentsAffairs.Controllers
         // Access this function by running the website (Ctrl+F5 or F5) then
         // navigating to http://localhost:xxxx/Students/FillData where xxxx is
         // the port number.
-        public ActionResult FillData()
+        [NonAction]
+        public void FillData(IExcelDataReader reader, int? department, int? group)
         {
             var evaluator = new DataTable(); // Evaluator for mathematics equations
-            int errors = 0, success = 0;
-            // Read the xlsx file, make sure the patch actually exists on your system.
-            foreach(var location in System.IO.Directory.GetFiles(@"C:\Users\Mohamed Nagy\Desktop\site"))
+            do //Loop through each sheet
             {
-                using (var stream = System.IO.File.Open(location, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+                while (reader.Read()) //Loop through each row if next row exists.
                 {
-                    using (var reader = ExcelReaderFactory.CreateReader(stream))
+                    // Checks if this is the first row in the sheet, or the row isn't complete, or first cell is empty.
+                    if (reader.GetString(0) == "اسم الطالب" || reader.FieldCount < 17 || String.IsNullOrEmpty(reader.GetValue(0)?.ToString()))
+                        continue;
+
+                    var student = new Student();
+
+                    try
                     {
-                        do //Loop through each sheet
+                        // TODO: YOU SHOULD FIX THIS.
+                        try
                         {
-                            while (reader.Read()) //Loop through each row if next row exists.
+                            if (!String.IsNullOrEmpty(reader.GetValue(0)?.ToString()))
+                                student.Name = reader.GetString(0);
+                        }
+                        catch { }
+                        
+                        try
+                        {
+                            if (!String.IsNullOrEmpty(reader.GetValue(1)?.ToString()))
+                                student.Sex = (StudentSex)Enum.Parse(typeof(StudentSex), reader.GetString(1));
+                        }
+                        catch { }
+                        
+                        try
+                        {
+                            if (!String.IsNullOrEmpty(reader.GetValue(2)?.ToString()))
+                                student.Nationality = reader.GetString(2);
+                        }
+                        catch { }
+                        
+                        try
+                        {
+                            if (!String.IsNullOrEmpty(reader.GetValue(3)?.ToString()))
+                                student.Religion = (StudentReligion)Enum.Parse(typeof(StudentReligion), reader.GetString(3));
+                        }
+                        catch { }
+                        
+                        try
+                        {
+                            if (!String.IsNullOrEmpty(reader.GetValue(4)?.ToString()))
+                                student.BirthDate = reader.GetDateTime(4);
+                        }
+                        catch { }
+                        
+                        try
+                        {
+                            if (!String.IsNullOrEmpty(reader.GetValue(5)?.ToString()))
+                                student.BirthPlace = reader.GetValue(5).ToString();
+                        }
+                        catch { }
+                        
+                        try
+                        {
+                            if (!String.IsNullOrEmpty(reader.GetValue(6)?.ToString()))
+                                student.PersonalCardId = reader.GetValue(6).ToString();
+                        }
+                        catch { }
+                        
+                        try
+                        {
+                            if (!String.IsNullOrEmpty(reader.GetValue(7)?.ToString()))
+                                student.CivilRegistry = reader.GetValue(7).ToString();
+                        }
+                        catch { }
+                        
+                        try
+                        {
+                            if (!String.IsNullOrEmpty(reader.GetValue(8)?.ToString()))
+                                student.AcademicQualificationAndDate = reader.GetString(8);
+                        }
+                        catch { }
+                        
+                        try
+                        {
+                            if (!String.IsNullOrEmpty(reader.GetValue(9)?.ToString()))
                             {
-                                // Checks if this is the first row in the sheet, or the row isn't complete.
-                                if (reader.GetString(0) == "اسم الطالب" || reader.FieldCount < 17 || String.IsNullOrEmpty(reader.GetValue(0)?.ToString()))
-                                    continue;
-
-                                var student = new Student();
-
                                 try
                                 {
-                                    // TODO: YOU SHOULD FIX THIS.
-                                    if (!String.IsNullOrEmpty(reader.GetValue(0)?.ToString()))
-                                        student.Name = reader.GetString(0);
-                                    if (!String.IsNullOrEmpty(reader.GetValue(1)?.ToString()))
-                                        student.Sex = (StudentSex)Enum.Parse(typeof(StudentSex), reader.GetString(1));
-                                    if (!String.IsNullOrEmpty(reader.GetValue(2)?.ToString()))
-                                        student.Nationality = reader.GetString(2);
-                                    if (!String.IsNullOrEmpty(reader.GetValue(3)?.ToString()))
-                                        student.Religion = (StudentReligion)Enum.Parse(typeof(StudentReligion), reader.GetString(3));
-                                    if (!String.IsNullOrEmpty(reader.GetValue(4)?.ToString()))
-                                        student.BirthDate = reader.GetDateTime(4);
-                                    if (!String.IsNullOrEmpty(reader.GetValue(5)?.ToString()))
-                                        student.BirthPlace = reader.GetValue(5).ToString();
-                                    if (!String.IsNullOrEmpty(reader.GetValue(6)?.ToString()))
-                                        student.PersonalCardId = reader.GetValue(6).ToString();
-                                    if (!String.IsNullOrEmpty(reader.GetValue(7)?.ToString()))
-                                        student.CivilRegistry = reader.GetValue(7).ToString();
-                                    if (!String.IsNullOrEmpty(reader.GetValue(8)?.ToString()))
-                                        student.AcademicQualificationAndDate = reader.GetString(8);
-                                    if (!String.IsNullOrEmpty(reader.GetValue(9)?.ToString()))
-                                    {
-                                        try
-                                        {
-                                            student.Total = reader.GetDouble(9);
-                                        }
-                                        catch
-                                        {
-                                            student.Total = double.Parse(evaluator.Compute(reader.GetValue(9).ToString(), "").ToString());
-                                        }
-                                    }
-                                    if (!String.IsNullOrEmpty(reader.GetValue(10)?.ToString()))
-                                        student.Speciality = reader.GetString(10);
-                                    if (!String.IsNullOrEmpty(reader.GetValue(11)?.ToString()))
-                                        student.StatusOfConstraint = reader.GetString(11);
-                                    if (!String.IsNullOrEmpty(reader.GetValue(12)?.ToString()))
-                                        student.ContantMethod = reader.GetString(12);
-                                    if (!String.IsNullOrEmpty(reader.GetValue(13)?.ToString()))
-                                        student.JoinDate = reader.GetDateTime(13);
-                                    if (!String.IsNullOrEmpty(reader.GetValue(14)?.ToString()))
-                                        student.PlaceOfResidence = reader.GetValue(14).ToString();
-                                    if (!String.IsNullOrEmpty(reader.GetValue(15)?.ToString()))
-                                        student.HomeNumber = GetIntFromString(reader.GetValue(15).ToString());
-                                    if (!String.IsNullOrEmpty(reader.GetValue(16)?.ToString()))
-                                        student.StreetNumber = reader.GetString(16);
-
-                                    db.Students.Add(student);
-                                    success++; 
+                                    student.Total = reader.GetDouble(9);
                                 }
-                                catch { errors++; }
+                                catch
+                                {
+                                    student.Total = double.Parse(evaluator.Compute(reader.GetValue(9).ToString(), "").ToString());
+                                }
                             }
-                        } while (reader.NextResult());
+                        }
+                        catch { }
+                        
+                        try
+                        {
+                            if (!String.IsNullOrEmpty(reader.GetValue(10)?.ToString()))
+                                student.Speciality = reader.GetString(10);
+                        }
+                        catch { }
+                        
+                        try
+                        {
+                            if (!String.IsNullOrEmpty(reader.GetValue(11)?.ToString()))
+                                student.StatusOfConstraint = reader.GetString(11);
+                        }
+                        catch { }
+                        
+                        try
+                        {
+                            if (!String.IsNullOrEmpty(reader.GetValue(12)?.ToString()))
+                                student.ContantMethod = reader.GetString(12);
+                        }
+                        catch { }
+                        
+                        try
+                        {
+                            if (!String.IsNullOrEmpty(reader.GetValue(13)?.ToString()))
+                                student.JoinDate = reader.GetDateTime(13);
+                        }
+                        catch { }
+                        
+                        try
+                        {
+                            if (!String.IsNullOrEmpty(reader.GetValue(14)?.ToString()))
+                                student.PlaceOfResidence = reader.GetValue(14).ToString();
+                        }
+                        catch { }
+                        
+                        try
+                        {
+                            if (!String.IsNullOrEmpty(reader.GetValue(15)?.ToString()))
+                                student.HomeNumber = GetIntFromString(reader.GetValue(15).ToString());
+                        }
+                        catch { }
+                        
+                        try
+                        {
+                            if (!String.IsNullOrEmpty(reader.GetValue(16)?.ToString()))
+                                student.StreetNumber = reader.GetString(16);
+                        }
+                        catch { }
+                        
+                        try
+                        {
+                            if (department != null)
+                                student.Department = (Departments)department;
+                        }
+                        catch { }
+                        
+                        try
+                        {
+                            if (group != null)
+                                student.Group = (Groups)group;
+                        }
+                        catch { }
+
+                        if (!String.IsNullOrEmpty(student?.Name))
+                            db.Students.Add(student);
                     }
+                    catch { }
                 }
-            }
+            } while (reader.NextResult());
+
             db.SaveChanges();
-            return Content($"Added {success} entries succesfully to the database. ${errors} Failed.");
+        }
+
+        public ActionResult Upload()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Upload(HttpPostedFileBase file, int? department, int? group)
+        {
+            string[] allowedMimeTypes = new string[] { "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.ms-excel" };
+            if (file != null && file.ContentLength != 0 && department != null & group != null)
+            {
+                if (allowedMimeTypes.Contains(file.ContentType))
+                {
+                    FillData(ExcelReaderFactory.CreateReader(file.InputStream), department, group);
+                    return Redirect("Index");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "نوع الملف الذي اخترته خطا, تاكد من اختيار ملف بصيغة xlsx او xls.");
+                }
+            } else
+            {
+                ModelState.AddModelError("", "يرجي اختيار الملف الخاص بالطلبه وتحديد كل من الفرقة والقسم.");
+            }
+
+            return View();
         }
 
         private int GetIntFromString(string str)

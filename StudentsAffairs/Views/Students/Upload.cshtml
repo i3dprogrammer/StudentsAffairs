@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "إدخال طلاب من ملف";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<center>
+    @using (Html.BeginForm("Upload", "Students", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary();
+
+        <input type="file" name="file" class="btn btn-default" /> <br />
+
+        @Html.DropDownList("department", EnumHelper.GetSelectList(typeof(StudentsAffairs.Models.Departments)), "اختار القسم", new { @class = "form-control" }) <br />
+        @Html.DropDownList("group", EnumHelper.GetSelectList(typeof(StudentsAffairs.Models.Groups)), "اختار الفرقة", new { @class = "form-control" }) <br />
+        <input type="submit" value="إدخال" class="btn btn-default btn-block" />
+    }
+</center>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
