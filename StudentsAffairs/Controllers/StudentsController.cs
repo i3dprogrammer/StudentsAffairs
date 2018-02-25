@@ -29,7 +29,7 @@ namespace StudentsAffairs.Controllers
             var evaluator = new DataTable(); // Evaluator for mathematics equations
             int errors = 0, success = 0;
             // Read the xlsx file, make sure the patch actually exists on your system.
-            foreach(var location in System.IO.Directory.GetFiles(@"C:\Users\VisualStudio\Desktop\files"))
+            foreach(var location in System.IO.Directory.GetFiles(@"C:\Users\Mohamed Nagy\Desktop\site"))
             {
                 using (var stream = System.IO.File.Open(location, System.IO.FileMode.Open, System.IO.FileAccess.Read))
                 {
@@ -104,6 +104,7 @@ namespace StudentsAffairs.Controllers
             db.SaveChanges();
             return Content($"Added {success} entries succesfully to the database. ${errors} Failed.");
         }
+
         private int GetIntFromString(string str)
         {
             string value = "0";
@@ -160,7 +161,7 @@ namespace StudentsAffairs.Controllers
         {
             if (!String.IsNullOrEmpty(searchString))
             {
-                students = students.Where(v => v.Name.Contains(searchString));
+                students = students.Where(v => v.Name.StartsWith(searchString));
             }
 
             return students;
