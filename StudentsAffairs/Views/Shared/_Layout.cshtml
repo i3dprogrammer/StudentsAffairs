@@ -14,6 +14,9 @@
             <div class="nav navbar-nav navbar-right">
                 @Html.ActionLink("قائمة الطلبة", "Index", "Students", new { area = "" }, new { @class = "navbar-brand" })
             </div>
+            <ul class="nav navbar-nav navbar-left">
+                <li>@Html.ActionLink("إضافة من ملف", "Upload", "Students", new { }, new { @class = "navbar-brand" })</li>
+            </ul>
             <div class="navbar-collapse collapse">
                 @Html.Partial("_LoginPartial")
             </div>

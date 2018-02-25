@@ -32,7 +32,7 @@ namespace StudentsAffairs.Controllers
             {
                 while (reader.Read()) //Loop through each row if next row exists.
                 {
-                    // Checks if this is the first row in the sheet, or the row isn't complete.
+                    // Checks if this is the first row in the sheet, or the row isn't complete, or first cell is empty.
                     if (reader.GetString(0) == "اسم الطالب" || reader.FieldCount < 17 || String.IsNullOrEmpty(reader.GetValue(0)?.ToString()))
                         continue;
 
@@ -95,34 +95,33 @@ namespace StudentsAffairs.Controllers
                 }
             } while (reader.NextResult());
 
-            ViewBag.action = "Added the data succesfully to the database.";
-
             db.SaveChanges();
         }
 
-        // upload excelfile
+        public ActionResult Upload()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Upload(HttpPostedFileBase file, int? department, int? group)
         {
-            if (file == null || file.ContentLength == 0)
+            string[] allowedMimeTypes = new string[] { "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.ms-excel" };
+            if (file != null && file.ContentLength != 0 && department != null & group != null)
             {
-                ViewBag.action = "Please select a excel file<br>";
-            }
-            else
-            {
-                string fileExtension = System.IO.Path.GetExtension(Request.Files["file"].FileName);
-
-                if (fileExtension == ".xls" || fileExtension == ".xlsx")
+                if (allowedMimeTypes.Contains(file.ContentType))
                 {
-                    string fileLocation = Server.MapPath("~/Content/") + Request.Files["file"].FileName;
-                    if (System.IO.File.Exists(fileLocation))
-                    {
-                        System.IO.File.Delete(fileLocation);
-                    }
-                    Request.Files["file"].SaveAs(fileLocation);
-
-                    FillData(ExcelReaderFactory.CreateReader(System.IO.File.OpenRead(fileLocation)), department, group);                    
+                    FillData(ExcelReaderFactory.CreateReader(file.InputStream), department, group);
+                    return Redirect("Index");
                 }
-
+                else
+                {
+                    ModelState.AddModelError("", "نوع الملف الذي اخترته خطا, تاكد من اختيار ملف بصيغة xlsx او xls.");
+                }
+            } else
+            {
+                ModelState.AddModelError("", "يرجي اختيار الملف الخاص بالطلبه وتحديد كل من الفرقة والقسم.");
             }
 
             return View();
