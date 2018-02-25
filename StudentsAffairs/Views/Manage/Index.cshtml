@@ -1,0 +1,31 @@
+﻿@model IEnumerable<StudentsAffairs.Models.ApplicationUser>
+
+@{
+    ViewBag.Title = "المستخدمين";
+}
+
+<h2>المستخدمين</h2>
+
+<p>
+    @Html.ActionLink("إضافة مسخدم جديد", "Register")
+</p>
+<table class="table">
+    <tr style="font-weight: bold;">
+        <td>
+            البريد الالكرتوني
+        </td>
+        <td></td>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.ActionLink("حذف", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

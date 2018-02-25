@@ -27,7 +27,7 @@ namespace StudentsAffairs.Controllers
         public ActionResult FillData()
         {
             var evaluator = new DataTable(); // Evaluator for mathematics equations
-
+            int errors = 0, success = 0;
             // Read the xlsx file, make sure the patch actually exists on your system.
             foreach(var location in System.IO.Directory.GetFiles(@"C:\Users\VisualStudio\Desktop\files"))
             {
@@ -93,15 +93,16 @@ namespace StudentsAffairs.Controllers
                                         student.StreetNumber = reader.GetString(16);
 
                                     db.Students.Add(student);
+                                    success++; 
                                 }
-                                catch { }
+                                catch { errors++; }
                             }
                         } while (reader.NextResult());
                     }
                 }
             }
             db.SaveChanges();
-            return Content("Added the data succesfully to the database.");
+            return Content($"Added {success} entries succesfully to the database. ${errors} Failed.");
         }
         private int GetIntFromString(string str)
         {

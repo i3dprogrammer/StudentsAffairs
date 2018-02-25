@@ -40,7 +40,7 @@ namespace StudentsAffairs
         {
         }
 
-        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context) 
+        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
             var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));
             // Configure validation logic for usernames
@@ -81,7 +81,7 @@ namespace StudentsAffairs
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)
             {
-                manager.UserTokenProvider = 
+                manager.UserTokenProvider =
                     new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("ASP.NET Identity"));
             }
             return manager;
@@ -106,4 +106,46 @@ namespace StudentsAffairs
             return new ApplicationSignInManager(context.GetUserManager<ApplicationUserManager>(), context.Authentication);
         }
     }
+
+    public class ApplicationRoleManager : RoleManager<IdentityRole>
+    {
+        public ApplicationRoleManager(IRoleStore<IdentityRole, string> roleStore)
+            : base(roleStore)
+        {
+        }
+        public static ApplicationRoleManager Create(IdentityFactoryOptions<ApplicationRoleManager> options, IOwinContext context)
+        {
+            return new ApplicationRoleManager(new RoleStore<IdentityRole>(context.Get<ApplicationDbContext>()));
+        }
+    }
+
+    //TODO: Fix DB Initializing the right way.
+    //public class ApplicationDbInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext>
+    //{
+    //    protected override void Seed(ApplicationDbContext context)
+    //    {
+    //        InitializeIdentityForEF(context);
+    //        base.Seed(context);
+    //    }
+    //    public static void InitializeIdentityForEF(ApplicationDbContext db)
+    //    {
+    //        var roleManager = HttpContext.Current.GetOwinContext().Get<ApplicationRoleManager>();
+    //        string roleName = "Admin";
+    //        var role = roleManager.FindByName(roleName);
+    //        if (role == null)
+    //        {
+    //            role = new IdentityRole(roleName);
+    //            var roleresult = roleManager.Create(role);
+    //        }
+
+    //        roleName = "User";
+    //        role = roleManager.FindByName(roleName);
+    //        if (role == null)
+    //        {
+    //            role = new IdentityRole(roleName);
+    //            var roleresult = roleManager.Create(role);
+    //        }
+    //    }
+    //}
+
 }

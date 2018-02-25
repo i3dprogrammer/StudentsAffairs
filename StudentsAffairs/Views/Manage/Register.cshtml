@@ -1,14 +1,14 @@
 ﻿@model StudentsAffairs.Models.RegisterViewModel
 @{
-    ViewBag.Title = "إضافة مستخدم";
+    ViewBag.Title = "مستخدم جديد";
 }
 
 <h2>@ViewBag.Title.</h2>
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("Register", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    <h4>لا يوجد حساب بعد ، قم بإنشاء حساب جديد الأن.</h4>
+    <h4>إنشاء مستخدم جديد.</h4>
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="form-group">
