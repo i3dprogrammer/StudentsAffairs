@@ -25,7 +25,7 @@ namespace StudentsAffairs.Controllers
         // navigating to http://localhost:xxxx/Students/FillData where xxxx is
         // the port number.
         [NonAction]
-        public void FillData(IExcelDataReader reader)
+        public void FillData(IExcelDataReader reader, int? department, int? group)
         {
             var evaluator = new DataTable(); // Evaluator for mathematics equations
             do //Loop through each sheet
@@ -84,6 +84,10 @@ namespace StudentsAffairs.Controllers
                             student.HomeNumber = GetIntFromString(reader.GetValue(15).ToString());
                         if (!String.IsNullOrEmpty(reader.GetValue(16)?.ToString()))
                             student.StreetNumber = reader.GetString(16);
+                        if(department != null)
+                        student.Department = (Departments) department ;
+                        if(group != null)
+                        student.Group = (Groups)group;
 
                         db.Students.Add(student);
                     }
@@ -97,7 +101,7 @@ namespace StudentsAffairs.Controllers
         }
 
         // upload excelfile
-        public ActionResult Upload(HttpPostedFileBase file)
+        public ActionResult Upload(HttpPostedFileBase file, int? department, int? group)
         {
             if (file == null || file.ContentLength == 0)
             {
@@ -115,7 +119,8 @@ namespace StudentsAffairs.Controllers
                         System.IO.File.Delete(fileLocation);
                     }
                     Request.Files["file"].SaveAs(fileLocation);
-                    FillData(ExcelReaderFactory.CreateReader(System.IO.File.OpenRead(fileLocation)));                    
+
+                    FillData(ExcelReaderFactory.CreateReader(System.IO.File.OpenRead(fileLocation)), department, group);                    
                 }
 
             }

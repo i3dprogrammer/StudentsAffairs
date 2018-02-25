@@ -6,7 +6,21 @@
 @using (Html.BeginForm("Upload", "Students", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
         <input type="file" name="file" />
+
+        @Html.DropDownList("department",
+                            EnumHelper.GetSelectList(typeof(StudentsAffairs.Models.Departments)),
+                            "اختار القسم",
+                            new { @class = "form-control" }
+                            )
+    <br />
+    @Html.DropDownList("group",
+                            EnumHelper.GetSelectList(typeof(StudentsAffairs.Models.Groups)),
+                            "اختار الفرقة",
+                            new { @class = "form-control" }
+                            )
+
         <input type="submit" value="OK" class="btn btn-default" />
-               
+
+        
     @ViewBag.action
 }  
