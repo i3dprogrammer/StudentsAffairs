@@ -192,9 +192,21 @@ namespace StudentsAffairs.Controllers
 
             db.SaveChanges();
         }
+        [NonAction]
+        private void GetDepartmentSelectList()
+        {
+            ViewBag.depList = Enum.GetValues(typeof(StudentsAffairs.Models.Departments))
+                    .Cast<StudentsAffairs.Models.Departments>()
+                    .Select(e => new SelectListItem
+                    {
+                        Value = ((int)e).ToString(),
+                        Text = e.ToString().Replace("_", " ")
+                    });
+        } 
 
         public ActionResult Upload()
         {
+            GetDepartmentSelectList();
             return View();
         }
 
@@ -219,6 +231,7 @@ namespace StudentsAffairs.Controllers
                 ModelState.AddModelError("", "يرجي اختيار الملف الخاص بالطلبه وتحديد كل من الفرقة والقسم.");
             }
 
+            GetDepartmentSelectList();
             return View();
         }
 

@@ -7,7 +7,8 @@
 <h2>@ViewBag.Title</h2>
 
 <p>
-    @Html.ActionLink("إضافة طالب جديد", "Create")
+    <button class="btn btn-lg" onclick="location.href='@Url.Action("Create")'" style="font-weight: bold; border: solid; border-width: 1px;">إضافة طالب جديد</button>
+    <button class="btn btn-lg" onclick="location.href='@Url.Action("Upload")'" style="font-weight: bold;border: solid; border-width: 1px;">إضافة طلاب من ملف</button>
 </p>
 
 
