@@ -267,14 +267,14 @@ namespace StudentsAffairs.Controllers
 
             /* GROUP SEARCH
              * */
-            if (Enum.TryParse(group, out Groups selected_group) && selected_group != Groups.الكل)
-                students = students.Where(x => x.Group == selected_group);
+            
             /* END GROUP SEARCH
              * */
 
 
             // Check search process.
-            students = SearchFilteration(search, students);
+            students = SearchFilterationByName(search, students);
+            students = SearchFilterationByGroup(group, students);
             // Set sorting process
             var studentsAsList = SortProcess(sort, students, search, page);
             // handle paging.
@@ -290,19 +290,36 @@ namespace StudentsAffairs.Controllers
             int pageSize = Constants.StudentsPerPage;
             int pageNumber = (page ?? 1);
             //saving data.
-            ViewBag.CurrentFilter = search;
+            ViewBag.CurrentFilterByName = search;
             ViewBag.PreviousPage = page;
             ViewBag.PreviousSearch = search;
             return students.ToPagedList(pageNumber, pageSize);
         }
 
         [NonAction]
-        private IQueryable<Student> SearchFilteration(string searchString, IQueryable<Student> students)
+        private IQueryable<Student> SearchFilterationByName(string searchString, IQueryable<Student> students)
         {
             if (!String.IsNullOrEmpty(searchString))
             {
                 students = students.Where(v => v.Name.StartsWith(searchString));
             }
+
+            return students;
+        }
+
+        [NonAction]
+        private IQueryable<Student> SearchFilterationByGroup(string group, IQueryable<Student> students)
+        {
+            if (group != null) {
+                Groups selectedGroup;
+                selectedGroup = (Groups)Enum.Parse(typeof(Groups), group);
+                
+                if (selectedGroup != Groups.الكل)
+                    students = students.Where(x => x.Group == selectedGroup);
+                
+                ViewBag.currentFilterByDep = group;
+            }
+            
 
             return students;
         }
@@ -366,7 +383,7 @@ namespace StudentsAffairs.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,Sex,Nationality,Religion,BirthDate,BirthPlace,PersonalCardId,CivilRegistry,AcademicQualificationAndDate,Total,Speciality,StatusOfConstraint,ContantMethod,JoinDate,PlaceOfResidence,HomeNumber,StreetNumber,OtherNotes")] Student student)
+        public ActionResult Create([Bind(Include = "ID,Name,Sex,Nationality,Religion,BirthDate,BirthPlace,PersonalCardId,CivilRegistry,AcademicQualificationAndDate,Total,Speciality,StatusOfConstraint,ContantMethod,JoinDate,PlaceOfResidence,HomeNumber,StreetNumber,OtherNotes,Department,Group")] Student student)
         {
             if (ModelState.IsValid)
             {

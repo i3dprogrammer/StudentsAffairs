@@ -15,7 +15,7 @@
 @using (Html.BeginForm("Index", "Students", FormMethod.Get))
 {
     <div class="form-inline">
-        <b>الاسم</b> @Html.TextBox("search", ViewBag.CurrentFilter as string, new { @class = "form-control" })
+        <b>الاسم</b> @Html.TextBox("search", ViewBag.CurrentFilterByName as string, new { @class = "form-control" })
         <b>الفرقة</b> @Html.EnumDropDownListFor(model => model.FirstOrDefault().Group, htmlAttributes: new { @class = "form-control" })
         <input type="submit" class="btn btn-default" value="بحث" />
     </div>
@@ -25,7 +25,7 @@
 <table class="table table-hover">
     <tr style="font-weight: bold; font-size: larger">
         <td>
-            @Html.ActionLink("اسـم الطــالــب", "Index", new { sort = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })
+            @Html.ActionLink("اسـم الطــالــب", "Index", new { sort = ViewBag.CurrentSort, currentFilterByName = ViewBag.CurrentFilterByName })
         </td>
         <td>
             @Html.DisplayNameFor(model => model.First().Group)
@@ -73,5 +73,5 @@
 صفحة @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) من @Model.PageCount
 
 @Html.PagedListPager(Model, page => Url.Action("Index",
-    new { currentFilter = ViewBag.CurrentFilter, page }),
+    new { currentFilter = ViewBag.CurrentFilterByName, group = ViewBag.CurrentFilterByDep, page }),
     new PagedListRenderOptions { LinkToPreviousPageFormat = "&rsaquo;", LinkToNextPageFormat = "&lsaquo;", LinkToFirstPageFormat = "&raquo;", LinkToLastPageFormat = "&laquo;" })
