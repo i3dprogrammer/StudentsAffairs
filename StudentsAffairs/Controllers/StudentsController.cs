@@ -264,14 +264,6 @@ namespace StudentsAffairs.Controllers
 
             var students = from v in db.Students select v;
 
-
-            /* GROUP SEARCH
-             * */
-            
-            /* END GROUP SEARCH
-             * */
-
-
             // Check search process.
             students = SearchFilterationByName(search, students);
             students = SearchFilterationByGroup(group, students);
@@ -311,11 +303,11 @@ namespace StudentsAffairs.Controllers
         private IQueryable<Student> SearchFilterationByGroup(string group, IQueryable<Student> students)
         {
             if (group != null) {
-                Groups selectedGroup;
-                selectedGroup = (Groups)Enum.Parse(typeof(Groups), group);
+                GroupsFilter selectedGroup;
+                selectedGroup = (GroupsFilter)Enum.Parse(typeof(GroupsFilter), group);
                 
-                if (selectedGroup != Groups.الكل)
-                    students = students.Where(x => x.Group == selectedGroup);
+                if (selectedGroup != GroupsFilter.الكل)
+                    students = students.Where(x => x.Group == (Groups) selectedGroup);
                 
                 ViewBag.currentFilterByDep = group;
             }

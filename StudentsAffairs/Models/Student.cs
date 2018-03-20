@@ -96,6 +96,7 @@ namespace StudentsAffairs.Models
         //[Required(ErrorMessage = "يجب اختيار الفرقة")]
         [Display(Name="الفرقة")]
         public Groups Group { get; set; }
+
     }
 
     public enum StudentReligion
@@ -113,4 +114,6 @@ namespace StudentsAffairs.Models
         انثى,
         أخر,
     }
+
+    
 }

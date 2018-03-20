@@ -1,7 +1,8 @@
 @model PagedList.IPagedList<StudentsAffairs.Models.Student>
+
 @using PagedList.Mvc;
 @{
-    ViewBag.Title = "قائمة الطلاب";
+        ViewBag.Title = "قائمة الطلاب";
 }
 
 <h2>@ViewBag.Title</h2>
@@ -16,7 +17,37 @@
 {
     <div class="form-inline">
         <b>الاسم</b> @Html.TextBox("search", ViewBag.CurrentFilterByName as string, new { @class = "form-control" })
-        <b>الفرقة</b> @Html.EnumDropDownListFor(model => model.FirstOrDefault().Group, htmlAttributes: new { @class = "form-control" })
+        @{
+            List<SelectListItem> groupItems = new List<SelectListItem>();
+            groupItems.Add(new SelectListItem
+            {
+                Text = "الكل",
+                Value = "4",
+                Selected = true
+            });
+            groupItems.Add(new SelectListItem
+            {
+                Text = "الاولى",
+                Value = "0",
+            });
+            groupItems.Add(new SelectListItem
+            {
+                Text = "الثانيه",
+                Value = "1"
+            });
+            groupItems.Add(new SelectListItem
+            {
+                Text = "الثالثه",
+                Value = "2"
+            });
+            groupItems.Add(new SelectListItem
+            {
+                Text = "الرابعه",
+                Value = "3"
+            });
+        }
+        @Html.DropDownList("group",groupItems, htmlAttributes: new { @class = "form-control" })
+        
         <input type="submit" class="btn btn-default" value="بحث" />
     </div>
     <br />
