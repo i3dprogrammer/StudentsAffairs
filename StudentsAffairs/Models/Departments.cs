@@ -40,5 +40,6 @@ namespace StudentsAffairs.Models
         الثانيه,
         الثالثه,
         الرابعه,
+        الكل,
     }
 }

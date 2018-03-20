@@ -250,7 +250,7 @@ namespace StudentsAffairs.Controllers
 
         // GET: Students
         // async to aviod query request delay leak.
-        public ActionResult Index(string sort, string search, int? page, string currentFilter)
+        public ActionResult Index(string sort, string search, string group, int? page, string currentFilter)
         {
             // Changing during paging
             if (search != null)
@@ -263,6 +263,16 @@ namespace StudentsAffairs.Controllers
             }
 
             var students = from v in db.Students select v;
+
+
+            /* GROUP SEARCH
+             * */
+            if (Enum.TryParse(group, out Groups selected_group) && selected_group != Groups.الكل)
+                students = students.Where(x => x.Group == selected_group);
+            /* END GROUP SEARCH
+             * */
+
+
             // Check search process.
             students = SearchFilteration(search, students);
             // Set sorting process
