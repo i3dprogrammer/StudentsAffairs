@@ -27,7 +27,7 @@
             @Html.ActionLink("اسـم الطــالــب","Index", new { sort = ViewBag.CurrentSort , currentFilter = ViewBag.CurrentFilter })
         </td>
         <td>
-            @Html.DisplayNameFor(model => model.First().Sex)
+            @Html.DisplayNameFor(model => model.First().Group)
         </td>
         <td>
             @Html.DisplayNameFor(model => model.First().PersonalCardId)
@@ -48,7 +48,7 @@
                 <a href="@Url.Action("Details", new { id = item.ID })">@Html.DisplayFor(modelItem => item.Name)</a>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Sex)
+                @Html.DisplayFor(modelItem => item.Group)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PersonalCardId)

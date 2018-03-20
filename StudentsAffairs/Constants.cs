@@ -7,7 +7,7 @@ namespace StudentsAffairs
 {
     public class Constants
     {
-        public const int MaxRegistrants = 2;
+        public const int MaxRegistrants = 1;
         public const int StudentsPerPage = 20;
     }
 }
