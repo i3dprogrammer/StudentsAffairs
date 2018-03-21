@@ -100,7 +100,7 @@ namespace StudentsAffairs.Controllers
                         try
                         {
                             if (!String.IsNullOrEmpty(reader.GetValue(8)?.ToString()))
-                                student.AcademicQualificationAndDate = reader.GetString(8);
+                                student.AcademicQualificationAndDate = reader.GetValue(8).ToString();
                         }
                         catch { }
                         
@@ -123,21 +123,21 @@ namespace StudentsAffairs.Controllers
                         try
                         {
                             if (!String.IsNullOrEmpty(reader.GetValue(10)?.ToString()))
-                                student.Speciality = reader.GetString(10);
+                                student.Speciality = reader.GetValue(10).ToString();
                         }
                         catch { }
                         
                         try
                         {
                             if (!String.IsNullOrEmpty(reader.GetValue(11)?.ToString()))
-                                student.StatusOfConstraint = reader.GetString(11);
+                                student.StatusOfConstraint = reader.GetValue(11).ToString();
                         }
                         catch { }
                         
                         try
                         {
                             if (!String.IsNullOrEmpty(reader.GetValue(12)?.ToString()))
-                                student.ContantMethod = reader.GetString(12);
+                                student.ContantMethod = reader.GetValue(12).ToString();
                         }
                         catch { }
                         
@@ -165,7 +165,7 @@ namespace StudentsAffairs.Controllers
                         try
                         {
                             if (!String.IsNullOrEmpty(reader.GetValue(16)?.ToString()))
-                                student.StreetNumber = reader.GetString(16);
+                                student.StreetNumber = reader.GetValue(16).ToString();
                         }
                         catch { }
                         
@@ -184,7 +184,18 @@ namespace StudentsAffairs.Controllers
                         catch { }
 
                         if (!String.IsNullOrEmpty(student?.Name))
-                            db.Students.Add(student);
+                        {
+                            var old_student = db.Students.Where(x => x.PersonalCardId == student.PersonalCardId).FirstOrDefault();
+                            if(old_student != null)
+                            {
+                                student.ID = old_student.ID;
+                                db.Entry(old_student).CurrentValues.SetValues(student);
+                            } else
+                            {
+                                db.Students.Add(student);
+                            }
+                        }
+                        
                     }
                     catch { }
                 }
@@ -375,7 +386,7 @@ namespace StudentsAffairs.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,Sex,Nationality,Religion,BirthDate,BirthPlace,PersonalCardId,CivilRegistry,AcademicQualificationAndDate,Total,Speciality,StatusOfConstraint,ContantMethod,JoinDate,PlaceOfResidence,HomeNumber,StreetNumber,OtherNotes,Department,Group")] Student student)
+        public ActionResult Create([Bind(Include = "Name,Sex,Nationality,Religion,BirthDate,BirthPlace,PersonalCardId,CivilRegistry,AcademicQualificationAndDate,Total,Speciality,StatusOfConstraint,ContantMethod,JoinDate,PlaceOfResidence,HomeNumber,StreetNumber,OtherNotes,Department,Group")] Student student)
         {
             if (ModelState.IsValid)
             {
